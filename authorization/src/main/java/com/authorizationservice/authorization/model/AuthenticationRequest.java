@@ -1,0 +1,87 @@
+package com.authorizationservice.authorization.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+
+@Entity
+@ApiModel(description = "Creating model class for user logging in")
+@Table(name="member")
+public class AuthenticationRequest {
+
+    @Id
+    @Column(name="member_id")
+    @ApiModelProperty(value = "Member id of the Customer doing login")
+    private String mid;
+    
+    @Column(name="member_name")
+    @ApiModelProperty(value = "Username of the Customer doing login")
+    private String username;
+    
+    @Column(name="member_password")
+    @ApiModelProperty(value = "Password of the Customer doing login")
+    private String password;
+    
+    
+    @Column(name="member_role")
+    @ApiModelProperty(value = "Role of the Member doing login")
+    private String role;
+	
+    
+    public AuthenticationRequest() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public AuthenticationRequest(String username, String password, String mid, String role) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.mid = mid;
+		this.role = role;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getMid() {
+		return mid;
+	}
+
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "AuthenticationRequest [username=" + username + ", password=" + password + ", mid=" + mid + ", role="
+				+ role + "]";
+	}
+ 
+}

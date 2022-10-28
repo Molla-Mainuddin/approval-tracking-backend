@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto8
+      docker: 18
+  pre_build:
+    commands:
+    - echo "Pre_build"
+    - echo "Logging in to Amazon ECR"
+    - $(aws ecr get-login  --no-include-email --region us-east-1)
+  build:
+    commands:
+    - echo "Build"
+    - echo "Entered build phase"
+    - docker login --username asthacts --password Astha@123
+    - echo "Building Java"
+    - cd  authorization
+    - mvn clean package
+    - docker build -t ij17-group2-policy:latest .
+    - docker tag ij17-group2-policy:latest 860061945305.dkr.ecr.us-east-1.amazonaws.com/ij17-group2-policy:policyapp
+  post_build:
+    commands:
+    - echo "Post_build"
+    - docker push 860061945305.dkr.ecr.us-east-1.amazonaws.com/ij17-group2-policy:policyapp
+    - printf '[{"name":"policy-container","imageUri":"%s"}]' 860061945305.dkr.ecr.us-east-1.amazonaws.com/ij17-group2-policy:policyapp > taskdefinition.json
+    - cat taskdefinition.json
+artifacts:
+  files:
+  - authorization/taskdefinition.json
